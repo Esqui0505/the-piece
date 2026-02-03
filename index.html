@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Para alguien especial</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: radial-gradient(circle at top,#0f3d2e,#071a14);
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* ===== PANTALLAS ===== */
+        .pantalla {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+
+            .pantalla.activa {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        /* ===== LOGIN ===== */
+        #login {
+            display: flex
+        }
+
+            #login h2 {
+                color: #c77dff;
+                margin-bottom: 20px
+            }
+
+            #login input {
+                padding: 14px;
+                width: 220px;
+                text-align: center;
+                border-radius: 6px;
+                border: 2px solid #c77dff;
+                margin-bottom: 15px
+            }
+
+            #login button {
+                padding: 12px 32px;
+                border-radius: 25px;
+                border: none;
+                cursor: pointer;
+                background: #c77dff;
+                font-weight: bold;
+            }
+
+        /* ===== ESTRELLA ===== */
+        .svg-estrella {
+            width: 260px
+        }
+
+        .estrella-path {
+            fill: none;
+            stroke: #c77dff;
+            stroke-width: 2.2;
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            animation: dibujar 4s linear forwards;
+        }
+
+        @keyframes dibujar {
+            to {
+                stroke-dashoffset: 0
+            }
+        }
+
+        /* ===== BIENVENIDA ===== */
+        #bienvenida h1 {
+            font-size: 3rem;
+            color: #c77dff;
+            margin-bottom: 20px
+        }
+
+        #bienvenida img {
+            max-width: 260px
+        }
+
+        /* ===== SOBRE ===== */
+        .envelope {
+            width: 220px;
+            height: 140px;
+            background: #f1faee;
+            position: relative;
+        }
+
+        .flap {
+            position: absolute;
+            inset: 0;
+            background: #95d5b2;
+            clip-path: polygon(0 0,100% 0,50% 60%);
+            transform-origin: top;
+            animation: abrir 2s ease forwards;
+        }
+
+        @keyframes abrir {
+            to {
+                transform: rotateX(180deg)
+            }
+        }
+
+        /* ===== HOJA ===== */
+        .hoja {
+            width: 80%;
+            min-height: 85vh;
+            padding: 60px;
+            background: #f2e2c4;
+            color: #2b2b2b;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.45);
+            overflow-y: auto;
+        }
+
+            .hoja h1 {
+                text-align: center;
+                color: #e63946;
+                margin-bottom: 30px
+            }
+
+        /* ===== TEXTO ANIMADO ===== */
+        .parrafo {
+            margin-bottom: 26px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: aparecer .6s ease forwards;
+        }
+
+        @keyframes aparecer {
+            to {
+                opacity: 1
+            }
+        }
+
+        /* ===== FIRMA ===== */
+        .firma {
+            margin-top: 40px;
+            text-align: right;
+            font-style: italic;
+            opacity: .75;
+        }
+
+            .firma span {
+                display: block;
+                font-size: .9rem;
+                color: #7f5539;
+            }
+
+        /* ===== MENU ===== */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 22px;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            z-index: 2000
+        }
+
+            .menu-btn span {
+                height: 4px;
+                background: #c77dff;
+                border-radius: 2px
+            }
+
+        .menu-panel {
+            position: fixed;
+            top: 0;
+            right: -260px;
+            width: 260px;
+            height: 100vh;
+            background: #2d1b3d;
+            padding: 30px;
+            transition: .3s;
+            z-index: 1500
+        }
+
+            .menu-panel.open {
+                right: 0
+            }
+
+            .menu-panel li {
+                list-style: none;
+                margin: 18px 0;
+                cursor: pointer;
+                font-size: 1.1rem
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <div class="pantalla activa" id="login">
+        <h2>Escribe el código</h2>
+        <input type="password" id="codigo" placeholder="******">
+        <button onclick="entrar()">Entrar</button>
+    </div>
+
+    <!-- ESTRELLA -->
+    <div class="pantalla" id="estrella">
+        <svg viewBox="0 0 200 200" class="svg-estrella">
+            <path class="estrella-path"
+                  d="M100 15 L124 75 L190 75 L136 115 L155 180 L100 140 L45 180 L64 115 L10 75 L76 75 Z" />
+        </svg>
+    </div>
+
+    <!-- BIENVENIDA -->
+    <div class="pantalla" id="bienvenida">
+        <h1>Bienvenida, espero te guste</h1>
+        <img src="corazones.jpg">
+    </div>
+
+    <!-- SOBRE -->
+    <div class="pantalla" id="sobre">
+        <div class="envelope"><div class="flap"></div></div>
+    </div>
+
+    <!-- CARTA -->
+    <div class="pantalla" id="carta">
+        <div class="hoja">
+            <h1>Para ti</h1>
+            <div id="textoCarta"></div>
+
+            <div class="firma">
+                Con cariño, Isaac
+                <span>I miss you</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- VERDADES -->
+    <div class="pantalla" id="verdades">
+        <div class="hoja">
+            <h1>Algunas cosas que senti contigo</h1>
+            <div id="textoVerdades"></div>
+
+            <div style="margin-top:40px;text-align:center">
+                <a href="https://open.spotify.com/track/7egu63DOhNpivWOpGtzqGS"
+                   target="_blank"
+                   style="padding:16px 60px;background:#1db954;color:white;
+border-radius:30px;text-decoration:none;font-size:1.2rem">
+                    🎧
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+
+    <div class="menu-panel" id="menuPanel">
+        <ul>
+            <li onclick="ir('carta')"> Carta</li>
+            <li onclick="ir('verdades')"> Verdades</li>
+        </ul>
+    </div>
+
+    <script>
+        const PASS = "080305";
+
+        const cartaTexto = `Hola, me alegra que hayas abierto la pagina y estes leyendo esto. Estos ultimos dias estuve pensando mucho, cosas de mi vida, situaciones, etc. Reflexione sobre todo y fue asi como diseñe y escribi esto con calma e intentar que se arregle esto tan especial.
+
+Hoy me dirijo a ti desde el corazon. Quiero que sepas que lo que compartimos para mi fue algo real, sencillo y honesto simplemente una conexion sin forzarse aunque no haya sido mucho el tiempo, pero logre sentir todo eso sin mentirte ni exagerar, una tranquilidad y al mismo tiempo felicidad un sentimiento unico. no hay nada que desee mas que volver a estar contigo, pero tambien esta mi respeto hacia ti, hacia lo que sientes y pienses y eso hace que me detenga y admito que te pienso en silencio, te elijo sin dudas y te quiero sin medida, yo no quiero dejarte ir y si tengo que dar todo de mi lo hare, aunque cometo errores trato de remediar y aprender de ellos para que haya tranquilidad y jamas dudes de lo que siento por ti, estar sin ti claro que me duele, pero tambien me ha demostrado que no eres alguien cualquiera, no eres una persona que me daria igual perder, es por eso que estoy aqui y no con promesas vacias.
+
+Empece a quererte sin darme cuenta, te lo juro no se en que momento paso y no hay forma de esconder algo que comenzo a ser evidente. Intento actuar como si nada pasara, mantener esa distancia, pero me resulta imposible no pensarte, quizas a ti no te pase lo mismo, no lo se quizas me equivoque y no te juzgo, de hecho tu bien sabes que tu felicidad es muy importante para mi, quizas no esperabas que apareciera con esto, pero tenia que hablarte aunque sea de esta forma y es que estos dias han sido un mar de emociones, no dejo de pensar en ti, en nosotros, en lo que teniamos y en lo que podriamos construir, tu me sigues importando demasiado, yo no puedo estar mas cerca ni estar tan lejos, si te sigo pensando y quisiera poder hablarte, y sabes, los ojos nunca mienten y los mios mueren por estar contigo.
+
+Siempre he creido que todos merecemos sentirnos tranquilos y felices con quien elegimos y pienso que contigo podria ser asi, sentir toda esa felicidad y tranquilidad en ambos, compartir mil historias y reir juntos, de hecho yo recuerdo todo lo que me contabas, cada detalle, cada palabra, cada momento que llegamos a compartir sea poco o sea mucho todo esta en mi mente, como el dia que salimos que sin duda para mi fue un dia muy especial, verte tan emocionada y feliz con los animalitos fue algo que me hacia sentir bien y me gusta verte asi de feliz o cuando estuvimos en el pasto acostados y como un angel te quedaste en mis brazos realmente era conexion y claro no puede faltar ese beso que con mucha pena se dio, y mil emociones se dieron en ese momento, no solo era tu belleza, era todo de ti, esa esencia tan unica.
+
+Tengo muy en cuenta tu miedo y se que hay una razon que alimenta mas ese miedo, y hay mas razones por las que no podriamos estar juntos, recuerdo que una vez te pregunte si realmente querias estar conmigo a lo que tu dijiste que si pero que existian esas razones y por lo tanto era muy dificil. Han habido noches en las que he pensado si eso era cierto, pero despues existieron acciones que me hicieron sentir que de verdad querias estar conmigo, que si me quieres y te importo y es por eso que estoy cansado de esas razones, porque solo nos han detenido y quiero que sepas que a pesar de todas esas razones siempre te elegire a ti en todo momento, y claro que podemos abordar cada una de esas razones desde el respeto y cariño para no generar mas conflictos porque si algo tengo claro es que realmente vale la pena luchar por esto y asi poder estar listos, pero como te habia dicho es un proceso que aun con miedo se puede llevar, porque hay un cariño tambien que esta de por medio, solo te pido que confies.
+
+Tus bellos ojos siempre los recuerdo y se me sale una sonrisa, y aunque este rodeado de gente siempre me llega tu recuerdo, pues no son tu y nadie es como tu y no te exagero en nada, tampoco estoy cegado o idealizando, es simplemente una realidad aunque me llamen loco, no lo entenderian y tampoco hay palabras para explicarlo, nunca habia sentido esta sensacion, te quiero tanto y jamas te voy a odiar, siempre estare para ti y si llegas a sentir algun sentimiento sabes donde encontrarme, no dudes en nada que yo estare cerca.`;
+
+        const verdades = [
+            "Que contigo no senti que tenia que demostrar nada.",
+            "Que hubo momentos donde el mundo se sintio diferente.",
+            "Que la calma tambien puede ser una forma de conexion.",
+            "Que el silencio a tu lado no incomodaba.",
+            "Que hubo instantes donde todo se sintio sencillo y real.",
+            "Que algunas conexiones no hacen ruido, pero dejan huella."
+        ];
+
+        function entrar() {
+            const v = document.getElementById("codigo").value.trim();
+            if (v === PASS) {
+                mostrar("estrella");
+                setTimeout(() => mostrar("bienvenida"), 2700);
+                setTimeout(() => mostrar("sobre"), 4500);
+                setTimeout(() => mostrar("carta"), 6500);
+            } else alert("Código incorrecto");
+        }
+
+        function mostrar(id) {
+            document.querySelectorAll(".pantalla").forEach(p => {
+                p.classList.remove("activa");
+                p.style.display = "none";
+            });
+            const el = document.getElementById(id);
+            el.style.display = "flex";
+            setTimeout(() => el.classList.add("activa"), 30);
+
+            document.querySelector(".menu-btn").style.display =
+                (id === "carta" || id === "verdades") ? "flex" : "none";
+
+            if (id === "carta") escribirCarta();
+            if (id === "verdades") escribirVerdades();
+        }
+
+        function escribirCarta() {
+            const c = document.getElementById("textoCarta");
+            c.innerHTML = "";
+            cartaTexto.split("\n\n").forEach((p, i) => {
+                const d = document.createElement("div");
+                d.className = "parrafo";
+                d.style.animationDelay = `${i * 0.4}s`;
+                d.textContent = p;
+                c.appendChild(d);
+            });
+        }
+
+        function escribirVerdades() {
+            const v = document.getElementById("textoVerdades");
+            v.innerHTML = "";
+            verdades.forEach((t, i) => {
+                const d = document.createElement("div");
+                d.className = "parrafo";
+                d.style.animationDelay = `${i * 0.3}s`;
+                d.textContent = t;
+                v.appendChild(d);
+            });
+        }
+
+        function toggleMenu() {
+            document.getElementById("menuPanel").classList.toggle("open");
+        }
+        function ir(id) {
+            document.getElementById("menuPanel").classList.remove("open");
+            mostrar(id);
+        }
+    </script>
+
+</body>
+</html>
+
+
+
