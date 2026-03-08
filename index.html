@@ -1,25 +1,40 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>The piece</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box
+            box-sizing: border-box;
         }
 
         body {
-            font-family: Georgia, serif;
-            background: radial-gradient(circle at top,#0f3d2e,#071a14);
+            font-family: Georgia,serif;
+            background: radial-gradient(circle at top,#1c5a44,#0b2b22);
             height: 100vh;
             overflow: hidden;
             color: white;
         }
 
-        /* ===== PANTALLAS ===== */
+        /* TRANSICION */
+
+        #fade {
+            position: absolute;
+            inset: 0;
+            background: black;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s;
+            z-index: 200;
+        }
+
+        /* PANTALLAS */
+
         .pantalla {
             position: absolute;
             inset: 0;
@@ -29,7 +44,7 @@
             flex-direction: column;
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity .6s ease, transform .6s ease;
+            transition: 1s;
         }
 
             .pantalla.activa {
@@ -37,15 +52,11 @@
                 transform: translateY(0);
             }
 
-        /* ===== LOGIN ===== */
-        #login {
-            display: flex
-        }
+        /* LOGIN */
 
-            #login h2 {
-                color: #c77dff;
-                margin-bottom: 20px
-            }
+        #login {
+            display: flex;
+        }
 
             #login input {
                 padding: 14px;
@@ -53,55 +64,156 @@
                 text-align: center;
                 border-radius: 6px;
                 border: 2px solid #c77dff;
-                margin-bottom: 15px
+                margin-bottom: 15px;
             }
 
             #login button {
                 padding: 12px 32px;
                 border-radius: 25px;
                 border: none;
-                cursor: pointer;
                 background: #c77dff;
+                cursor: pointer;
                 font-weight: bold;
             }
 
-        /* ===== ESTRELLA ===== */
-        .svg-estrella {
-            width: 260px
+        /* TITULOS */
+
+        .tituloGrande {
+            font-size: 56px;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
-        .estrella-path {
-            fill: none;
-            stroke: #c77dff;
-            stroke-width: 2.2;
-            stroke-dasharray: 1200;
-            stroke-dashoffset: 1200;
-            animation: dibujar 4s linear forwards;
+        .tituloCarta {
+            color: #e63946;
+            font-size: 48px;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        @keyframes dibujar {
-            to {
-                stroke-dashoffset: 0
+        /* BIENVENIDA */
+
+        .bienvenida-img {
+            width: 260px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        /* PASTEL */
+
+        #pastel {
+            background: #020202;
+        }
+
+        .cake {
+            margin-top: 40px;
+            width: 260px;
+            height: 130px;
+            background: #7a3e2c;
+            border-radius: 12px;
+            position: relative;
+        }
+
+            .cake::before {
+                content: "";
+                position: absolute;
+                top: -45px;
+                width: 100%;
+                height: 70px;
+                background: #f2e2c4;
+                border-radius: 50%;
+            }
+
+        /* VELAS */
+
+        .candle {
+            width: 10px;
+            height: 40px;
+            background: #c77dff;
+            position: absolute;
+            top: -40px;
+        }
+
+        .flame {
+            width: 14px;
+            height: 20px;
+            background: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: -20px;
+            left: -2px;
+            animation: flicker .25s infinite alternate;
+            box-shadow: 0 0 20px orange,0 0 40px orange;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scale(1)
+            }
+
+            100% {
+                transform: scale(1.25)
             }
         }
 
-        /* ===== BIENVENIDA ===== */
-        #bienvenida h1 {
-            font-size: 3rem;
-            color: #c77dff;
-            margin-bottom: 20px
+        /* REGALO */
+
+        .gift {
+            width: 170px;
+            height: 130px;
+            background: #c77dff;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            margin-top: 20px;
         }
 
-        #bienvenida img {
-            max-width: 260px
+            .gift::before {
+                content: "";
+                position: absolute;
+                width: 22px;
+                height: 130px;
+                background: white;
+                left: 74px;
+            }
+
+            .gift::after {
+                content: "";
+                position: absolute;
+                width: 170px;
+                height: 22px;
+                background: white;
+                top: 55px;
+            }
+
+        .bow {
+            position: absolute;
+            top: -22px;
+            left: 65px;
+            width: 40px;
+            height: 20px;
+            background: white;
+            border-radius: 10px;
         }
 
-        /* ===== SOBRE ===== */
+        /* SOBRE */
+
         .envelope {
-            width: 220px;
-            height: 140px;
+            width: 260px;
+            height: 160px;
             background: #f1faee;
             position: relative;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .envelope-text {
+            position: absolute;
+            top: 95px;
+            left: 20px;
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
         }
 
         .flap {
@@ -110,19 +222,15 @@
             background: #95d5b2;
             clip-path: polygon(0 0,100% 0,50% 60%);
             transform-origin: top;
-            animation: abrir 2s ease forwards;
+            transition: 1.2s;
         }
 
-        @keyframes abrir {
-            to {
-                transform: rotateX(180deg)
-            }
-        }
+        /* HOJA */
 
-        /* ===== HOJA ===== */
         .hoja {
             width: 80%;
-            min-height: 85vh;
+            height: auto;
+            max-height: 85vh;
             padding: 60px;
             background: #f2e2c4;
             color: #2b2b2b;
@@ -131,16 +239,13 @@
             overflow-y: auto;
         }
 
-            .hoja h1 {
-                text-align: center;
-                color: #e63946;
-                margin-bottom: 30px
-            }
+        /* CARTA TEXTO */
 
-        /* ===== TEXTO ANIMADO ===== */
         .parrafo {
-            margin-bottom: 26px;
-            line-height: 1.8;
+            margin-bottom: 28px;
+            line-height: 1.4;
+            font-size: 16px;
+            text-align: justify;
             opacity: 0;
             animation: aparecer .6s ease forwards;
         }
@@ -151,21 +256,45 @@
             }
         }
 
-        /* ===== FIRMA ===== */
+        /* FIRMA */
+
         .firma {
-            margin-top: 40px;
+            margin-top: 60px;
             text-align: right;
             font-style: italic;
-            opacity: .75;
+            opacity: .8;
         }
 
             .firma span {
                 display: block;
-                font-size: .9rem;
+                font-size: 14px;
                 color: #7f5539;
             }
 
-        /* ===== MENU ===== */
+        /* VERDADES */
+
+        .verdad {
+            margin-bottom: 32px;
+            font-size: 16px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: aparecer .6s ease forwards;
+        }
+
+        /* BOTON MUSICA */
+
+        .music-btn {
+            margin-top: 40px;
+            padding: 16px 60px;
+            background: #1db954;
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        /* MENU */
+
         .menu-btn {
             position: fixed;
             top: 20px;
@@ -207,93 +336,275 @@
                 cursor: pointer;
                 font-size: 1.1rem
             }
+
+        /* GLOBOS */
+
+        .balloon {
+            position: absolute;
+            bottom: -120px;
+            width: 40px;
+            height: 50px;
+            background: #c77dff;
+            border-radius: 50%;
+            animation: subir 14s linear infinite;
+        }
+
+            .balloon::after {
+                content: "";
+                position: absolute;
+                width: 2px;
+                height: 70px;
+                background: white;
+                left: 19px;
+                top: 50px;
+            }
+
+        @keyframes subir {
+            0% {
+                transform: translateY(0)
+            }
+
+            100% {
+                transform: translateY(-120vh)
+            }
+        }
+
+        /* ESTRELLAS */
+
+        .star {
+            position: absolute;
+            color: #ffd166;
+            font-size: 20px;
+            animation: brillo 2.5s infinite alternate;
+        }
+
+        .toca {
+            margin-top: 20px;
+            font-size: 20px;
+            opacity: 0.85;
+        }
+
+        @keyframes brillo {
+            0% {
+                opacity: .2
+            }
+
+            100% {
+                opacity: 1
+            }
+        }
+
+        @media (max-width:600px) {
+
+            .hoja {
+                width: 92%;
+                padding: 35px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- LOGIN -->
+    <div id="fade"></div>
+
     <div class="pantalla activa" id="login">
         <h2>Escribe el código</h2>
-        <input type="password" id="codigo" placeholder="******">
+        <input type="password" id="codigo">
         <button onclick="entrar()">Entrar</button>
     </div>
 
-    <!-- ESTRELLA -->
-    <div class="pantalla" id="estrella">
-        <svg viewBox="0 0 200 200" class="svg-estrella">
-            <path class="estrella-path"
-                  d="M100 15 L124 75 L190 75 L136 115 L155 180 L100 140 L45 180 L64 115 L10 75 L76 75 Z" />
-        </svg>
-    </div>
-
-    <!-- BIENVENIDA -->
     <div class="pantalla" id="bienvenida">
-        <h1>Bienvenida, espero te guste</h1>
-        <img src="corazones.jpg">
+        <h1 class="tituloGrande">Bienvenida de vuelta a tu espacio</h1>
+        <img src="corazones.jpg" class="bienvenida-img">
     </div>
 
-    <!-- SOBRE -->
+    <div class="pantalla" id="mensajes">
+        <h1 class="tituloGrande" id="mensajeCumple"></h1>
+    </div>
+
+    <div class="pantalla" id="pastel">
+
+        <h1 class="tituloGrande">Feliz cumpleaños, Maya</h1>
+
+        <div class="cake">
+
+            <div class="candle" style="left:20px"><div class="flame"></div></div>
+            <div class="candle" style="left:60px"><div class="flame"></div></div>
+            <div class="candle" style="left:100px"><div class="flame"></div></div>
+            <div class="candle" style="left:140px"><div class="flame"></div></div>
+            <div class="candle" style="left:180px"><div class="flame"></div></div>
+            <div class="candle" style="left:220px"><div class="flame"></div></div>
+
+        </div>
+
+        <p>Sopla las velas </p>
+
+    </div>
+
+    <div class="pantalla" id="regalo">
+
+        <h1 class="tituloGrande">Toca para abrir</h1>
+
+        <div class="gift" onclick="mostrar('sobre')">
+            <div class="bow"></div>
+        </div>
+
+    </div>
+
     <div class="pantalla" id="sobre">
-        <div class="envelope"><div class="flap"></div></div>
+
+        <div class="envelope" onclick="abrirSobre()">
+
+            <div class="envelope-text">
+                Para: Maya<br>
+                De: Isaac
+            </div>
+
+            <div class="flap"></div>
+
+        </div>
+
+        <p class="toca">toca el sobre</p>
+
     </div>
 
-    <!-- CARTA -->
-    <div class="pantalla" id="carta">
+        </div>
+
+    </div>
+
+    <!-- CARTA CUMPLE -->
+
+    <div class="pantalla" id="cumple">
+
         <div class="hoja">
-            <h1>Para ti</h1>
+
+            <h1 class="tituloCarta">Feliz cumpleaños</h1>
+
+            <p class="parrafo" style="animation-delay:0.3s">
+                Hola Maya, hoy es tu cumpleaños y queria dejarte unas palabras sencillas y muy sinceras.
+            </p>
+
+            <p class="parrafo" style="animation-delay:0.7s">
+                Espero que te la pases super bien, rodeada de la gente que tu aprecies y quieras, pues hoy no es cualquier dia hoy te la debes pasar muy bien, disfruta de tu dia pues estas cumpliendo un año mas, se que a veces existen altas y tambien bajadas, pero eso no te quita la persona tan increible que eres y que te mereces lo mejor del mundo.
+            </p>
+
+            <p class="parrafo" style="animation-delay:1.1s">
+                Ademas de ser una mujer tan bella, tambien tienes un gran corazon. Espero que este nuevo año te acompañe de mucho exito, buenos momentos y de mucha felicidad, simplemente momentos de paz que te hagan sentir bien.
+            </p>
+
+            <p class="parrafo" style="animation-delay:1.5s">
+                Ojala que cada dia que pase te regale algo bueno y que cada paso que des te acerque mas a lo que deseas para tu vida.
+            </p>
+
+            <p class="parrafo" style="animation-delay:1.9s">
+                Hay personas que tienen una forma especial de ser, una forma totalmente unica y tu eres una de ellas, sin duda conocerte ha sido de las mejores cosas que me han pasado, como te lo digo eres unica
+            </p>
+
+            <p class="parrafo" style="animation-delay:2.3s">
+                y hoy celebras un añito mas, es un bello dia y muy especial, por eso escribi esta pequeña carta de cumpleaños con mucha felicidad y paz.
+            </p>
+
+            <p class="parrafo" style="animation-delay:2.7s">
+                Como notaste la pagina tiene un diseño inspirado en este maravilloso dia, lo hice con tranquilidad para que todo saliera perfecto, es un pequeño detalle hecho con mucho cariño y de todo corazon y espero que te guste.
+            </p>
+
+            <p class="parrafo" style="animation-delay:3.1s">
+                Sabes que te tengo un cariño muy especial y que eres una persona que siempre voy a apreciar. A veces no se necesitan muchos momentos para que se queden en la mente, porque cada momento que pasamos, cada historia y cada palabra la recuerdo con una sonrisa y tampoco me olvido de las promesas....
+            </p>
+            <p class="parrafo" style="animation-delay:3.5s">
+                ademas, creo que no hace falta recordar que este espacio es tuyo, que puedes entrar cuando quieras por eso te dije que lo guardaras porque quizas despues haya algo nuevo
+            </p>
+
+            <p class="parrafo" style="animation-delay:3.5s">
+                Muchas felicidades, Maya. Pasatela increible y disfrutalo muchisimo y sabes que estoy para ti en todo momento, tu sabes donde encontrarme.
+            </p>
+
+            <p class="parrafo" style="animation-delay:3.5s">
+                Te mando un fuerte abrazo
+            </p>
+
+            <p class="parrafo" style="animation-delay:3.9s">
+                Te quiero mucho mucho mucho :)
+            </p>
+
+            <div class="firma">
+                Con cariño, Isaac
+
+            </div>
+
+            <div style="text-align:center">
+                <a href="https://open.spotify.com/track/3k3NWokhRRkEPhCzPmV8TW?si=k2N4ARzqSvq2lw6JhYlEng" target="_blank" class="music-btn">🎧</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CARTA ORIGINAL -->
+
+    <div class="pantalla" id="carta">
+
+        <div class="hoja">
+
+            <h1 class="tituloCarta">Para ti</h1>
+
             <div id="textoCarta"></div>
 
             <div class="firma">
                 Con cariño, Isaac
                 <span>I miss you</span>
             </div>
+
         </div>
+
     </div>
 
     <!-- VERDADES -->
+
     <div class="pantalla" id="verdades">
+
         <div class="hoja">
-            <h1>Algunas cosas que senti contigo</h1>
+
+            <h1 class="tituloCarta">Algunas cosas que senti contigo</h1>
+
             <div id="textoVerdades"></div>
 
-            <div style="margin-top:40px;text-align:center">
-                <a href="https://open.spotify.com/track/7egu63DOhNpivWOpGtzqGS"
-                   target="_blank"
-                   style="padding:16px 60px;background:#1db954;color:white;
-border-radius:30px;text-decoration:none;font-size:1.2rem">
-                    🎧
-                </a>
+            <div style="text-align:center">
+                <a href="https://open.spotify.com/track/7egu63DOhNpivWOpGtzqGS?si=pzk0Kq2sQriyzCS9yvAXrg" target="_blank" class="music-btn">🎧</a>
             </div>
+
         </div>
+
     </div>
 
     <!-- MENU -->
+
     <div class="menu-btn" onclick="toggleMenu()">
         <span></span><span></span><span></span>
     </div>
 
     <div class="menu-panel" id="menuPanel">
+
         <ul>
-            <li onclick="ir('carta')"> Carta</li>
-            <li onclick="ir('verdades')"> Verdades</li>
+
+            <li onclick="ir('cumple')">Carta cumpleaños</li>
+            <li onclick="ir('carta')">Carta</li>
+            <li onclick="ir('verdades')">Verdades</li>
+
         </ul>
+
     </div>
 
     <script>
-        const PASS = "080305";
 
-        const cartaTexto = `Hola, me alegra que hayas abierto la pagina y estes leyendo esto. Estos ultimos dias estuve pensando mucho, cosas de mi vida, situaciones, etc. Reflexione sobre todo y fue asi como diseñe y escribi esto con calma para intentar que se arregle esto tan especial.
+        const PASS = "080305"
 
-Hoy me dirijo a ti desde el corazon. Quiero que sepas que lo que compartimos para mi fue algo real, sencillo y honesto simplemente una conexion sin forzarse aunque no haya sido mucho el tiempo, pero logre sentir todo eso sin mentirte ni exagerar, una tranquilidad y al mismo tiempo felicidad un sentimiento unico. no hay nada que desee mas que volver a estar contigo, pero tambien esta mi respeto hacia ti, hacia lo que sientes y pienses y eso hace que me detenga y admito que te pienso en silencio, te elijo sin dudas y te quiero sin medida, yo no quiero dejarte ir y si tengo que dar todo de mi lo hare, aunque cometo errores trato de remediar y aprender de ellos para que haya tranquilidad y jamas dudes de lo que siento por ti, estar sin ti claro que me duele, pero tambien me ha demostrado que no eres alguien cualquiera, no eres una persona que me daria igual perder, es por eso que estoy aqui y no con promesas vacias.
-
-Empece a quererte sin darme cuenta, te lo juro no se en que momento paso y no hay forma de esconder algo que comenzo a ser evidente. Intento actuar como si nada pasara, mantener esa distancia, pero me resulta imposible no pensarte, quizas a ti no te pase lo mismo, no lo se quizas me equivoque y no te juzgo, de hecho tu bien sabes que tu felicidad es muy importante para mi, quizas no esperabas que apareciera con esto, pero tenia que hablarte aunque sea de esta forma y es que estos dias han sido un mar de emociones, no dejo de pensar en ti, en nosotros, en lo que teniamos y en lo que podriamos construir, tu me sigues importando demasiado, yo no puedo estar mas cerca ni estar tan lejos, si te sigo pensando y quisiera poder hablarte, y sabes, los ojos nunca mienten y los mios mueren por estar contigo.
-
-Siempre he creido que todos merecemos sentirnos tranquilos y felices con quien elegimos y pienso que contigo podria ser asi, sentir toda esa felicidad y tranquilidad en ambos, compartir mil historias y reir juntos, de hecho yo recuerdo todo lo que me contabas, cada detalle, cada palabra, cada momento que llegamos a compartir sea poco o sea mucho todo esta en mi mente, como el dia que salimos que sin duda para mi fue un dia muy especial, verte tan emocionada y feliz con los animalitos fue algo que me hacia sentir bien y me gusta verte asi de feliz o cuando estuvimos en el pasto acostados y como un angel te quedaste en mis brazos realmente era conexion y claro no puede faltar ese beso que con mucha pena se dio, y mil emociones se dieron en ese momento, no solo era tu belleza, era todo de ti, esa esencia tan unica.
-
-Tengo muy en cuenta tu miedo y se que hay una razon que alimenta mas ese miedo, y hay mas razones por las que no podriamos estar juntos, recuerdo que una vez te pregunte si realmente querias estar conmigo a lo que tu dijiste que si pero que existian esas razones y por lo tanto era muy dificil. Han habido noches en las que he pensado si eso era cierto, pero despues existieron acciones que me hicieron sentir que de verdad querias estar conmigo, que si me quieres y te importo y es por eso que estoy cansado de esas razones, porque solo nos han detenido y quiero que sepas que a pesar de todas esas razones siempre te elegire a ti en todo momento, y claro que podemos abordar cada una de esas razones desde el respeto y cariño para no generar mas conflictos porque si algo tengo claro es que realmente vale la pena luchar por esto y asi poder estar listos, pero como te habia dicho es un proceso que podemos tomar con calma y que aun con miedo se puede llevar sin apresurar nada, porque hay un cariño tambien que esta de por medio, solo te pido que confies.
-
-Tus bellos ojos siempre los recuerdo y se me sale una sonrisa, y aunque este rodeado de gente siempre me llega tu recuerdo, pues no son tu y nadie es como tu y no te exagero en nada, tampoco estoy cegado o idealizando, es simplemente una realidad aunque me llamen loco, no lo entenderian y tampoco hay palabras para explicarlo, nunca habia sentido esta sensacion y la verdad es que hay tantas cosas que me hacen recordarte, incluso estos dias te he soñado y se ha sentido tan real, pero al despertar vuelvo a la realidad donde tu no estas y se siente tan extraño que solo quisiera tenerte a lado mio y  te juro que solo quisiera tomarte de la mano e irnos a otro mundo, donde seamos solo tu y yo.  te quiero tanto y jamas te voy a odiar, siempre estare para ti y si llegas a sentir algun sentimiento sabes donde encontrarme, no dudes en nada que yo estare cerca todos los dias, las semanas, los siglos, los años aunque quizas para ti ya sea un extraño yo seguire ahi. Se trata de disfrutar solamente.`;
+        const mensajes = [
+            "Hoy no es un dia cualquiera",
+            "Hoy es un dia muy especial",
+            "Disfruta de este pequeño regalo"
+        ]
 
         const verdades = [
             "Que contigo no senti que tenia que demostrar nada.",
@@ -302,75 +613,217 @@ Tus bellos ojos siempre los recuerdo y se me sale una sonrisa, y aunque este rod
             "Que el silencio a tu lado no incomodaba.",
             "Que hubo instantes donde todo se sintio sencillo y real.",
             "Que algunas conexiones no hacen ruido, pero dejan huella."
-        ];
+        ]
 
+        const cartaTexto = `Hola, me alegra que hayas abierto la pagina y estes leyendo esto. Estos ultimos dias estuve pensando mucho, cosas de mi vida, situaciones, etc. Reflexione sobre todo y fue asi como diseñe y escribi esto con calma e intentar que se arregle esto tan especial.
+
+Hoy me dirijo a ti desde el corazon. Quiero que sepas que lo que compartimos para mi fue algo real, sencillo y honesto simplemente una conexion sin forzarse aunque no haya sido mucho el tiempo, pero logre sentir todo eso sin mentirte ni exagerar, una tranquilidad y al mismo tiempo felicidad un sentimiento unico. no hay nada que desee mas que volver a estar contigo, pero tambien esta mi respeto hacia ti, hacia lo que sientes y pienses y eso hace que me detenga y admito que te pienso en silencio, te elijo sin dudas y te quiero sin medida, yo no quiero dejarte ir y si tengo que dar todo de mi lo hare, aunque cometo errores trato de remediar y aprender de ellos para que haya tranquilidad y jamas dudes de lo que siento por ti, estar sin ti claro que me duele, pero tambien me ha demostrado que no eres alguien cualquiera, no eres una persona que me daria igual perder, es por eso que estoy aqui y no con promesas vacias.
+
+Empece a quererte sin darme cuenta, te lo juro no se en que momento paso y no hay forma de esconder algo que comenzo a ser evidente. Intento actuar como si nada pasara, mantener esa distancia, pero me resulta imposible no pensarte, quizas a ti no te pase lo mismo, no lo se quizas me equivoque y no te juzgo, de hecho tu bien sabes que tu felicidad es muy importante para mi, quizas no esperabas que apareciera con esto, pero tenia que hablarte aunque sea de esta forma y es que estos dias han sido un mar de emociones, no dejo de pensar en ti, en nosotros, en lo que teniamos y en lo que podriamos construir, tu me sigues importando demasiado, yo no puedo estar mas cerca ni estar tan lejos, si te sigo pensando y quisiera poder hablarte, y sabes, los ojos nunca mienten y los mios mueren por estar contigo.
+
+Siempre he creido que todos merecemos sentirnos tranquilos y felices con quien elegimos y pienso que contigo podria ser asi, sentir toda esa felicidad y tranquilidad en ambos, compartir mil historias y reir juntos, de hecho yo recuerdo todo lo que me contabas, cada detalle, cada palabra, cada momento que llegamos a compartir sea poco o sea mucho todo esta en mi mente, como el dia que salimos que sin duda para mi fue un dia muy especial, verte tan emocionada y feliz con los animalitos fue algo que me hacia sentir bien y me gusta verte asi de feliz o cuando estuvimos en el pasto acostados y como un angel te quedaste en mis brazos realmente era conexion y claro no puede faltar ese beso que con mucha pena se dio, y mil emociones se dieron en ese momento, no solo era tu belleza, era todo de ti, esa esencia tan unica.
+
+Tengo muy en cuenta tu miedo y se que hay una razon que alimenta mas ese miedo, y hay mas razones por las que no podriamos estar juntos, recuerdo que una vez te pregunte si realmente querias estar conmigo a lo que tu dijiste que si pero que existian esas razones y por lo tanto era muy dificil. Han habido noches en las que he pensado si eso era cierto, pero despues existieron acciones que me hicieron sentir que de verdad querias estar conmigo, que si me quieres y te importo y es por eso que estoy cansado de esas razones, porque solo nos han detenido y quiero que sepas que a pesar de todas esas razones siempre te elegire a ti en todo momento, y claro que podemos abordar cada una de esas razones desde el respeto y cariño para no generar mas conflictos porque si algo tengo claro es que realmente vale la pena luchar por esto y asi poder estar listos, pero como te habia dicho es un proceso que aun con miedo se puede llevar, porque hay un cariño tambien que esta de por medio, solo te pido que confies.
+
+Tus bellos ojos siempre los recuerdo y se me sale una sonrisa, y aunque este rodeado de gente siempre me llega tu recuerdo, pues no son tu y nadie es como tu y no te exagero en nada, tampoco estoy cegado o idealizando, es simplemente una realidad aunque me llamen loco, no lo entenderian y tampoco hay palabras para explicarlo, nunca habia sentido esta sensacion, te quiero tanto y jamas te voy a odiar, siempre estare para ti y si llegas a sentir algun sentimiento sabes donde encontrarme, no dudes en nada que yo estare cerca.`
         function entrar() {
-            const v = document.getElementById("codigo").value.trim();
-            if (v === PASS) {
-                mostrar("estrella");
-                setTimeout(() => mostrar("bienvenida"), 2700);
-                setTimeout(() => mostrar("sobre"), 4500);
-                setTimeout(() => mostrar("carta"), 6500);
-            } else alert("Código incorrecto");
+
+            if (document.getElementById("codigo").value.trim() === PASS) {
+
+                decoracion()
+
+                mostrar("bienvenida")
+
+                setTimeout(() => mostrarMensajes(), 2500)
+
+            }
+
         }
 
         function mostrar(id) {
+
             document.querySelectorAll(".pantalla").forEach(p => {
-                p.classList.remove("activa");
-                p.style.display = "none";
-            });
-            const el = document.getElementById(id);
-            el.style.display = "flex";
-            setTimeout(() => el.classList.add("activa"), 30);
+                p.classList.remove("activa")
+                p.style.display = "none"
+            })
+
+            const el = document.getElementById(id)
+
+            el.style.display = "flex"
+
+            setTimeout(() => el.classList.add("activa"), 30)
 
             document.querySelector(".menu-btn").style.display =
-                (id === "carta" || id === "verdades") ? "flex" : "none";
+                (id === "cumple" || id === "carta" || id === "verdades") ? "flex" : "none"
 
-            if (id === "carta") escribirCarta();
-            if (id === "verdades") escribirVerdades();
+            if (id === "carta") escribirCarta()
+            if (id === "verdades") escribirVerdades()
+
+        }
+
+        function mostrarMensajes() {
+
+            mostrar("mensajes")
+
+            let i = 0
+
+            function siguiente() {
+
+                if (i >= mensajes.length) {
+
+                    mostrar("pastel")
+                    activarMicrofono()
+                    return
+
+                }
+
+                document.getElementById("mensajeCumple").textContent = mensajes[i]
+
+                i++
+
+                setTimeout(siguiente, 2500)
+
+            }
+
+            siguiente()
+
+        }
+
+        function activarMicrofono() {
+
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+
+                const audioContext = new AudioContext()
+                const mic = audioContext.createMediaStreamSource(stream)
+                const analyser = audioContext.createAnalyser()
+
+                mic.connect(analyser)
+
+                const data = new Uint8Array(analyser.fftSize)
+
+                function detectar() {
+
+                    analyser.getByteTimeDomainData(data)
+
+                    let volumen = 0
+
+                    for (let i = 0; i < data.length; i++) {
+                        volumen += Math.abs(data[i] - 128)
+                    }
+
+                    if (volumen > 2000) {
+
+                        document.querySelectorAll(".flame").forEach(f => f.style.display = "none")
+
+                        stream.getTracks().forEach(track => track.stop());
+
+                        let fade = document.getElementById("fade")
+
+                        fade.style.opacity = 1
+
+                        setTimeout(() => {
+                            mostrar("regalo")
+                            fade.style.opacity = 0
+                        }, 2000)
+
+                        return
+                    }
+
+                    requestAnimationFrame(detectar)
+
+                }
+
+                detectar()
+
+            })
+
+        }
+
+        function abrirSobre() {
+
+            document.querySelector(".flap").style.transform = "rotateX(180deg)"
+
+            setTimeout(() => mostrar("cumple"), 1200)
+
         }
 
         function escribirCarta() {
-            const c = document.getElementById("textoCarta");
-            c.innerHTML = "";
+
+            const c = document.getElementById("textoCarta")
+
+            c.innerHTML = ""
+
             cartaTexto.split("\n\n").forEach((p, i) => {
-                const d = document.createElement("div");
-                d.className = "parrafo";
-                d.style.animationDelay = `${i * 0.4}s`;
-                d.textContent = p;
-                c.appendChild(d);
-            });
+
+                const d = document.createElement("div")
+                d.className = "parrafo"
+                d.style.animationDelay = `${i * 0.4}s`
+                d.textContent = p
+
+                c.appendChild(d)
+
+            })
+
         }
 
         function escribirVerdades() {
-            const v = document.getElementById("textoVerdades");
-            v.innerHTML = "";
+
+            const v = document.getElementById("textoVerdades")
+
+            v.innerHTML = ""
+
             verdades.forEach((t, i) => {
-                const d = document.createElement("div");
-                d.className = "parrafo";
-                d.style.animationDelay = `${i * 0.3}s`;
-                d.textContent = t;
-                v.appendChild(d);
-            });
+
+                const d = document.createElement("div")
+
+                d.className = "verdad"
+
+                d.style.animationDelay = `${i * 0.5}s`
+
+                d.textContent = t
+
+                v.appendChild(d)
+
+            })
+
         }
 
         function toggleMenu() {
-            document.getElementById("menuPanel").classList.toggle("open");
+            document.getElementById("menuPanel").classList.toggle("open")
         }
+
         function ir(id) {
-            document.getElementById("menuPanel").classList.remove("open");
-            mostrar(id);
+            document.getElementById("menuPanel").classList.remove("open")
+            mostrar(id)
         }
+
+        function decoracion() {
+
+            for (let i = 0; i < 8; i++) {
+
+                let g = document.createElement("div")
+                g.className = "balloon"
+                g.style.left = Math.random() * 100 + "vw"
+
+                document.body.appendChild(g)
+
+            }
+
+            for (let i = 0; i < 20; i++) {
+
+                let s = document.createElement("div")
+                s.className = "star"
+                s.innerHTML = "✦"
+                s.style.left = Math.random() * 100 + "vw"
+                s.style.top = Math.random() * 100 + "vh"
+
+                document.body.appendChild(s)
+
+            }
+
+        }
+
     </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
