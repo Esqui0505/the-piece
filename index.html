@@ -266,19 +266,28 @@ transition: .7s;
         /* BOTONES ?*/
 
         .info-btn{
-top:auto !important;
-right:auto !important;
-bottom:20px !important;
-left:20px !important;
-position:fixed;
-box-shadow:0 8px 18px rgba(0,0,0,.35);
+position:absolute;
+bottom:30px;
+left:30px;
+width:42px;
+height:42px;
+border-radius:50%;
+border:none;
+background:linear-gradient(145deg,#c77dff,#9f5cff);
+color:white;
+font-size:20px;
+cursor:pointer;
+transition:.3s;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 6px 14px rgba(0,0,0,.35);
 }
-        }
 
-            .info-btn:hover {
-                transform: scale(1.1);
-                box-shadow: 0 0 12px #c77dff
-            }
+            .info-btn:hover{
+transform:scale(1.12);
+box-shadow:0 0 12px #c77dff,0 0 25px #c77dff;
+}
 
         .info-bottom {
             position: fixed;
@@ -774,6 +783,7 @@ Te quiero mucho mucho mucho :)`
 
 </body>
 </html>
+
 
 
 
