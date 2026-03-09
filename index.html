@@ -12,13 +12,13 @@
             box-sizing: border-box
         }
 
-        body {
-            font-family: Georgia,serif;
-            background: radial-gradient(circle at top,#0f3d2e,#071a14);
-            height: 100vh;
-            overflow: hidden;
-            color: white
-        }
+       body {
+font-family: Georgia, serif;
+background: radial-gradient(circle at top,#0f3d2e,#071a14);
+min-height: 100vh;
+overflow-y: auto;
+color: white;
+}
 
         /* PANTALLAS */
 
@@ -362,13 +362,16 @@
             font-size: 22px
         }
 
-        @media (max-width:600px) {
+        @media (max-width:600px){
 
-            .hoja {
-                width: 92%;
-                padding: 35px;
-            }
-        }
+.info-btn{
+top: auto;
+right: auto;
+bottom: 20px;
+left: 20px;
+}
+
+}
     </style>
 </head>
 
@@ -773,3 +776,4 @@ Te quiero mucho mucho mucho :)`
 
 </body>
 </html>
+
