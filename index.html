@@ -12,31 +12,31 @@
             box-sizing: border-box
         }
 
-     body{
-font-family: Georgia,serif;
-background: radial-gradient(circle at top,#0f3d2e,#071a14);
-min-height:100vh;
-overflow-x:hidden;
-color:white;
-background-attachment:fixed;
-}
+        body {
+            font-family: Georgia,serif;
+            background: radial-gradient(circle at top,#0f3d2e,#071a14);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+            background-attachment: fixed;
+        }
 
         /* PANTALLAS */
 
         .pantalla {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-min-height: 100vh;
-display: none;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-opacity: 0;
-transform: scale(.95) translateY(20px);
-transition: .7s;
-}
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transform: scale(.95) translateY(20px);
+            transition: .7s;
+        }
 
             .pantalla.activa {
                 opacity: 1;
@@ -266,29 +266,29 @@ transition: .7s;
 
         /* BOTONES ?*/
 
-        .info-btn{
-position:absolute;
-bottom:30px;
-left:30px;
-width:42px;
-height:42px;
-border-radius:50%;
-border:none;
-background:linear-gradient(145deg,#c77dff,#9f5cff);
-color:white;
-font-size:20px;
-cursor:pointer;
-transition:.3s;
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 6px 14px rgba(0,0,0,.35);
-}
+        .info-btn {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(145deg,#c77dff,#9f5cff);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 14px rgba(0,0,0,.35);
+        }
 
-            .info-btn:hover{
-transform:scale(1.12);
-box-shadow:0 0 12px #c77dff,0 0 25px #c77dff;
-}
+            .info-btn:hover {
+                transform: scale(1.12);
+                box-shadow: 0 0 12px #c77dff,0 0 25px #c77dff;
+            }
 
         .info-bottom {
             position: fixed;
@@ -370,16 +370,15 @@ box-shadow:0 0 12px #c77dff,0 0 25px #c77dff;
             font-size: 22px
         }
 
-      @media (max-width:600px){
+        @media (max-width:600px) {
 
-.info-btn{
-top:auto !important;
-right:auto !important;
-bottom:20px;
-left:20px;
-}
-
-}
+            .info-btn {
+                top: auto !important;
+                right: auto !important;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -388,7 +387,7 @@ left:20px;
     <!-- LOGIN -->
 
     <div class="pantalla activa" id="login">
-        <h2>Escribe el código</h2>
+        <h2>Escribe el codigo</h2>
         <input type="password" id="codigo">
         <button onclick="entrar()">Entrar</button>
     </div>
@@ -524,7 +523,7 @@ left:20px;
             </p>
 
             <p style="margin-top:10px;opacity:.9">
-                Pero siempre quedaran guardados en este espacio...
+                Pero aqui siempre podran encontrarse de nuevo en forma de recuerdo...
             </p>
 
         </div>
@@ -554,7 +553,9 @@ left:20px;
         const PASS = "080305"
 
         let primeraMusica = true
-        let primeraVez = true
+        let notaVista = false
+
+
 
         const cartaTexto = `Hola, me alegra que hayas abierto la pagina y estes leyendo esto. Estos ultimos dias estuve pensando mucho, cosas de mi vida, situaciones, etc. Reflexione sobre todo y fue asi como diseñe y escribi esto con calma para intentar que se arregle esto tan especial.
 
@@ -570,7 +571,7 @@ Tus bellos ojos siempre los recuerdo y se me sale una sonrisa. Y aunque este rod
 
 Te quiero tanto y jamas te voy a odiar. Siempre estare para ti y si llegas a sentir algun sentimiento sabes donde encontrarme. No dudes en nada que yo estare cerca todos los dias, las semanas, los siglos, los años. Aunque quizas para ti ya sea un extraño yo seguire ahi. Se trata de disfrutar solamente.`
 
-         
+
         const cumpleTexto = `Hola Maya, hoy es tu cumpleaños y queria dejarte unas palabras sencillas y muy sinceras.
 
 Espero que te la pases super bien, rodeada de la gente que tu aprecies y quieras, pues hoy no es cualquier dia hoy te la debes pasar muy bien, disfruta de tu dia pues estas cumpliendo un año mas, se que a veces existen altas y tambien bajadas, pero eso no te quita la persona tan increible que eres y que te mereces lo mejor del mundo.
@@ -643,7 +644,13 @@ Te quiero mucho mucho mucho :)`
 
                 escribirCarta()
 
-                
+                if (!notaVista) {
+                    setTimeout(() => {
+                        document.getElementById("notaEventos").style.display = "flex"
+                    }, 500)
+
+                    notaVista = true
+                }
 
             }
 
@@ -750,11 +757,6 @@ Te quiero mucho mucho mucho :)`
                 p.style.display = "none"
                 p.classList.remove("cerrar")
 
-                 
-                    setTimeout(() => {
-                        document.getElementById("notaEventos").style.display = "flex"
-                    }, 200)
-                
 
             }, 300)
 
