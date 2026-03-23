@@ -510,23 +510,6 @@ left:20px;
         <div class="popup-content">
             <span class="cerrar" onclick="cerrarPopup('novedades')">✕</span>
 
-            <h2>Novedades</h2>
-
-            <p>Esta pagina recibio algunas pequeñas mejoras:</p>
-
-            <ul style="margin-top:15px;text-align:left;line-height:1.8">
-                <li>Se añadio un nuevo recuerdo <b>"carta de cumpleaños"</b>.</li>
-                <li>Nueva <b>seccion de musica</b>.</li>
-            </ul>
-
-            <p style="margin-top:18px;opacity:.9">
-                Recuerda que este espacio es tuyo y que puedes acceder cuando quieras, que esto podria ser como un rincon de tranquilidad.
-            </p>
-
-            <p style="margin-top:18px;opacity:.9">
-               Ademas con el tiempo puede que reciba pequeñas mejoras, nuevas cartas, nueva musica y mas.
-            </p>
-
         </div>
     </div>
 
@@ -660,10 +643,7 @@ Te quiero mucho mucho mucho :)`
 
                 escribirCarta()
 
-                if (primeraVez) {
-                    document.getElementById("novedades").style.display = "flex"
-                    primeraVez = false
-                }
+                
 
             }
 
@@ -770,11 +750,11 @@ Te quiero mucho mucho mucho :)`
                 p.style.display = "none"
                 p.classList.remove("cerrar")
 
-                if (id === "novedades") {
+                 
                     setTimeout(() => {
                         document.getElementById("notaEventos").style.display = "flex"
                     }, 200)
-                }
+                
 
             }, 300)
 
