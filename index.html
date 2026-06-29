@@ -174,9 +174,7 @@
             opacity: 0;
             transform: translateY(45px) scale(.97);
             animation: entradaHoja 1s cubic-bezier(.2,.9,.2,1) forwards;
-            transform-style: preserve-3d;
-            will-change: transform;
-            transition: transform .25s ease-out, box-shadow .35s ease;
+            transition: box-shadow .35s ease;
         }
 
         .tituloEspecial {
@@ -348,7 +346,8 @@
             padding: 30px;
             transition: .4s;
             z-index: 1500;
-            box-shadow: -10px 0 25px rgba(0,0,0,.4) backdrop-filter:blur(18px);
+            backdrop-filter: blur(18px);
+            box-shadow: -10px 0 25px rgba(0,0,0,.4);
             -webkit-backdrop-filter: blur(18px);
             border-left: 1px solid rgba(255,255,255,.08);
             box-shadow: -20px 0 45px rgba(0,0,0,.35);
@@ -1148,29 +1147,7 @@ PARTICULAS
 
         animarParticulas()
 
-        /*==========================
-HOJA VIVA
-==========================*/
 
-        const hojas = document.querySelectorAll(".hoja")
-
-        document.addEventListener("mousemove", (e) => {
-
-            const x = (e.clientX / window.innerWidth - .5) * 2
-
-            const y = (e.clientY / window.innerHeight - .5) * 2
-
-            hojas.forEach(h => {
-
-                h.style.transform = `
-perspective(1400px)
-rotateX(${y * -1.2}deg)
-rotateY(${x * 1.8}deg)
-`
-
-            })
-
-        })
 
         document.addEventListener("mouseleave", () => {
 
