@@ -19,6 +19,47 @@
             overflow-x: hidden;
             color: white;
             background-attachment: fixed;
+            -webkit-user-select: none;
+            user-select: none;
+            scroll-behavior: smooth;
+        }
+
+        /* =========================
+   FONDO VIVO
+========================= */
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+        }
+
+        :root {
+            --mouseX: 50%;
+            --mouseY: 50%;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouseX) var(--mouseY), rgba(199,125,255,.12), transparent 34%), radial-gradient(circle at 18% 25%, rgba(60,255,170,.07), transparent 38%), radial-gradient(circle at 78% 75%, rgba(255,255,255,.03), transparent 30%);
+            animation: ambiente 18s ease-in-out infinite alternate;
+            transition: background .45s ease, transform .4s ease;
+            z-index: -1;
+        }
+
+        @keyframes ambiente {
+
+            from {
+                filter: brightness(1);
+                transform: scale(1);
+            }
+
+            to {
+                filter: brightness(.82);
+                transform: scale(1.08);
+            }
         }
 
         /* PANTALLAS */
@@ -35,12 +76,20 @@
             flex-direction: column;
             opacity: 0;
             transform: scale(.95) translateY(20px);
-            transition: .7s;
+            transition: opacity .65s ease, transform .65s cubic-bezier(.22,.61,.36,1), filter .65s ease;
         }
 
             .pantalla.activa {
                 opacity: 1;
                 transform: scale(1) translateY(0)
+            }
+
+        .pantalla {
+            filter: blur(4px);
+        }
+
+            .pantalla.activa {
+                filter: blur(0);
             }
 
         /* LOGIN */
@@ -122,25 +171,61 @@
             border-radius: 8px;
             box-shadow: 0 20px 50px rgba(0,0,0,.45);
             margin: 40px auto;
+            opacity: 0;
+            transform: translateY(45px) scale(.97);
+            animation: entradaHoja 1s cubic-bezier(.2,.9,.2,1) forwards;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform .25s ease-out, box-shadow .35s ease;
         }
 
-        @keyframes hojaAparece {
-            from {
+        .tituloEspecial {
+            color: #c77dff;
+            text-shadow: 0 0 10px rgba(199,125,255,.18);
+            letter-spacing: 2px;
+        }
+
+        @keyframes entradaHoja {
+
+            0% {
                 opacity: 0;
-                transform: scale(.96)
+                transform: translateY(70px) scale(.94) rotateX(12deg);
+                filter: blur(6px);
             }
 
-            to {
+            55% {
                 opacity: 1;
-                transform: scale(1)
+                transform: translateY(-8px) scale(1.01);
+                filter: blur(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
             }
         }
 
         .hoja h1 {
             text-align: center;
-            color: #e63946;
-            margin-bottom: 30px
+            color: #d94258;
+            margin-bottom: 35px;
+            font-size: 2.4rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+            position: relative;
         }
+
+            .hoja h1::before,
+            .hoja h1::after {
+                content: "";
+                display: block;
+                width: 110px;
+                height: 2px;
+                margin: 18px auto;
+                background: linear-gradient( 90deg, transparent, #c77dff, transparent);
+                opacity: .75;
+            }
 
         /* TEXTO */
 
@@ -148,29 +233,73 @@
             margin-bottom: 26px;
             line-height: 1.8;
             opacity: 0;
-            animation: aparecer .6s forwards
+            animation: aparecer .8s ease forwards;
         }
-
         @keyframes aparecer {
-            to {
-                opacity: 1
+
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+                filter: blur(3px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
             }
         }
 
         /* FIRMA */
-
         .firma {
             margin-top: 80px;
             text-align: right;
             font-style: italic;
-            opacity: .85;
-            animation: firmaGlow 4s infinite alternate
+            opacity: 0;
+            transform: translateY(25px);
+            animation: firmaEntrada 1.3s ease forwards;
+            animation-delay: 1.8s;
         }
+
+            .firma span {
+                display: block;
+                font-size: .9rem;
+                opacity: 0;
+                letter-spacing: 2px;
+                animation: subFirma 1s ease forwards;
+                animation-delay: 2.8s;
+            }
 
             .firma span {
                 display: block;
                 font-size: .9rem
             }
+
+        @keyframes firmaEntrada {
+
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: .92;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subFirma {
+
+            from {
+                opacity: 0;
+                letter-spacing: 10px;
+            }
+
+            to {
+                opacity: .75;
+                letter-spacing: 2px;
+            }
+        }
 
         @keyframes firmaGlow {
             from {
@@ -195,11 +324,12 @@
             justify-content: space-between;
             cursor: pointer;
             z-index: 2000;
-            transition: .3s
+            transition: transform .3s, filter .3s;
         }
 
             .menu-btn:hover {
-                transform: scale(1.1)
+                transform: scale(1.12) rotate(90deg);
+                filter: drop-shadow(0 0 10px #c77dff);
             }
 
             .menu-btn span {
@@ -214,48 +344,74 @@
             right: -260px;
             width: 260px;
             height: 100vh;
-            background: #2d1b3d;
+            background: rgba(28,18,38,.72);
             padding: 30px;
             transition: .4s;
             z-index: 1500;
-            box-shadow: -10px 0 25px rgba(0,0,0,.4)
+            box-shadow: -10px 0 25px rgba(0,0,0,.4) backdrop-filter:blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-left: 1px solid rgba(255,255,255,.08);
+            box-shadow: -20px 0 45px rgba(0,0,0,.35);
         }
 
             .menu-panel.open {
                 right: 0
             }
-
             .menu-panel li {
                 list-style: none;
                 margin: 18px 0;
                 cursor: pointer;
-                font-size: 1.1rem;
-                transition: .25s
+                font-size: 1.08rem;
+                padding: 12px 18px;
+                border-radius: 10px;
+                transition: .25s;
             }
 
                 .menu-panel li:hover {
-                    transform: translateX(5px);
-                    color: #c77dff
+                    transform: translateX(8px);
+                    background: rgba(255,255,255,.05);
+                    color: #dca5ff;
+                    box-shadow: 0 0 18px rgba(199,125,255,.12);
                 }
 
         /* BOTONES */
 
         .music-btn {
             padding: 14px 50px;
-            background: #1db954;
+            background: linear-gradient( 145deg, #1db954, #16a34a);
             color: white;
-            border-radius: 30px;
+            border-radius: 35px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.08rem;
             display: inline-block;
-            transition: .3s
+            transition: transform .35s, box-shadow .35s, filter .35s;
+            box-shadow: 0 10px 20px rgba(0,0,0,.25);
+            position: relative;
+            overflow: hidden;
         }
 
-            .music-btn:hover {
-                transform: scale(1.08);
-                box-shadow: 0 0 15px #1db954
+            .music-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -120%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient( 90deg, transparent, rgba(255,255,255,.35), transparent);
+                transform: skewX(-25deg);
+                transition: .6s;
             }
 
+            .music-btn:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 0 25px rgba(29,185,84,.35);
+                filter: brightness(1.08);
+
+            }
+
+                .music-btn:hover::before {
+                    left: 180%;
+                }
         .song {
             margin-bottom: 30px
         }
@@ -383,6 +539,7 @@
 </head>
 
 <body>
+    <canvas id="particles"></canvas>
 
     <!-- LOGIN -->
 
@@ -404,7 +561,7 @@
     <!-- BIENVENIDA -->
 
     <div class="pantalla" id="bienvenida">
-        <h1>Bienvenida de vuelta a tu espacio.</h1>
+        <h1 id="saludo">Bienvenida de vuelta a tu espacio.</h1>
         <img src="corazones.jpg">
     </div>
 
@@ -442,6 +599,21 @@
         <div class="hoja">
             <h1>Carta de cumpleaños</h1>
             <div id="textoCumple"></div>
+
+            <div class="firma">
+                Con cariño, Isaac
+                <span>I miss you</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- TE EXTRAÑO -->
+
+    <div class="pantalla" id="teExtrano">
+        <div class="hoja">
+            <h1 class="tituloEspecial">Te extraño</h1>
+            <div id="textoTeExtrano"></div>
 
             <div class="firma">
                 Con cariño, Isaac
@@ -494,10 +666,13 @@
 
     <div class="menu-panel" id="menuPanel">
         <ul>
-            <li onclick="ir('carta')">Carta</li>
-            <li onclick="ir('verdades')">Verdades</li>
-            <li onclick="ir('cumple')">Carta de cumpleaños</li>
-            <li onclick="ir('musica')">Musica</li>
+            <ul>
+                <li onclick="ir('teExtrano')">Te extraño</li>
+                <li onclick="ir('carta')">Carta</li>
+                <li onclick="ir('verdades')">Verdades</li>
+                <li onclick="ir('cumple')">Carta de cumpleaños</li>
+                <li onclick="ir('musica')">Musica</li>
+            </ul>
         </ul>
     </div>
 
@@ -550,11 +725,63 @@
 
     <script>
 
+        function actualizarSaludo() {
+
+            const hora = new Date().getHours()
+
+            const saludo = document.getElementById("saludo")
+
+            if (!saludo) return
+
+            if (hora >= 6 && hora < 12) {
+
+                saludo.textContent = "Me alegra que hayas vuelto."
+
+            }
+            else if (hora >= 12 && hora < 19) {
+
+                saludo.textContent = "Bienvenida de vuelta a tu espacio."
+
+            }
+            else {
+
+                saludo.textContent = "Qué bonito es volver a encontrarte aquí."
+
+            }
+
+        }
+
+        actualizarSaludo()
+
         const PASS = "080305"
 
         let primeraMusica = true
         let notaVista = false
 
+
+        function actualizarSaludo() {
+
+            const hora = new Date().getHours()
+
+            const saludo = document.getElementById("saludo")
+
+            if (!saludo) return
+
+            if (hora >= 6 && hora < 12) {
+
+                saludo.textContent = "Buenos días, me alegra verte de nuevo."
+
+            } else if (hora >= 12 && hora < 19) {
+
+                saludo.textContent = "Bienvenida de vuelta a tu espacio."
+
+            } else {
+
+                saludo.textContent = "Buenas noches, gracias por volver."
+
+            }
+
+        }
 
 
         const cartaTexto = `Hola, me alegra que hayas abierto la pagina y estes leyendo esto. Estos ultimos dias estuve pensando mucho, cosas de mi vida, situaciones, etc. Reflexione sobre todo y fue asi como diseñe y escribi esto con calma para intentar que se arregle esto tan especial.
@@ -596,6 +823,28 @@ Te mando un fuerte abrazo
 
 Te quiero mucho mucho mucho :)`
 
+        const teExtranoTexto = `Hay dias en los que todo parece seguir con normalidad. Las clases, la musica, los planes, la gente... y aun asi en algun momento del dia, apareces en mi mente sin avisar. No siempre de la misma manera. A veces es una cancion, otras un lugar, una conversacion o simplemente un instante de silencio. Es muy curioso como aun sin tenerte sigues presente de alguna manera.
+
+Durante este tiempo me he equivocado, he aprendido y tambien he cambiado, a pesar del corto tiempo uno reconoce cuando no esta haciendo algo bien y decide buscar maneras de solucionarlo. Hay capitulos de la vida que nos transforman, y el nuestro fue uno de ellos. Hoy miro hacia atras con una perspectiva diferente a la que tenía hace algunos meses, algunos dias, algunas semanas etc etc.
+
+Mientras escribo estas palabras estoy viviendo nuevas experiencias, conociendo lugares distintos y descubriendo versiones de mi que antes no conocia. Y aun asi, en medio de todo eso, hay momentos en los que pienso: "Ojalá pudiera contarle esto." No porque espere una respuesta, sino porque todavia me hace ilusion imaginar como habria sido compartir algunas de estas historias contigo.
+
+A veces me pregunto si tambiin habra algo que, de vez en cuando, te haga recordar aquellos dias. Lo que si se es que los recuerdos que guardo de nosotros siguen teniendo un lugar muy especial en mi vida y no quisiera que algun día se perdieran.
+
+Recuerdo las salidas que tuvimos que no fueron muchas, pero si quedan bien grabadas más que nada por la gran compañia, nuestras conversaciones, la tranquilidad que sentía estando contigo y los besos y abrazos que todavía viven en mi memoria. Son recuerdos sencillos, pero precisamente por eso son tan valiosos. Nunca necesite grandes cosas para sentirme feliz a tu lado; bastaba con compartir un momento contigo para que el dia tuviera un significado diferente.
+
+Con el paso de los dias y con la ayuda necesaria, reconozco que yo por un momento me sentia perdido en la oscuridad, luchando con el dolor de varios sucesos y es por eso que yo no podia ser yo y hacia mas problemas donde no los tenia que haber, pero aun con eso siempre permanecio algo sincero y es ese cariño que te tengo, y por mas que me duela no tenerte cerca, sigo respetando tu espacio, tus decisiones incluso si tu ya me sacaste de tu camino, yo te seguire queriendo.
+
+Con esta pagina y las cartas o detalles que dejo busco que puedas sonreir al recordar lo que vivimos, sin sentir que estas palabras esperan algo de ti, solo un momento de felicidad.
+
+Claro que te extraño. Seria mentira decir lo contrario, hay dias en los que quiero escribirte y decirte lo mucho que me haces falta, pero me detengo y sabes, incluso la distancia no ha podido borrar todo lo bueno que conoci de ti. Hay personas que cambian nuestra vida, ya te lo había dicho, contigo siento algo totalmente diferente a lo habitual, te quiero con total sinceridad.
+
+Sabes que volvere, a no ser que tu ya no me quieras en tu camino.
+
+pase lo que pase, siempre tendras un lugar especial en mi corazón.
+
+te quiero inmensamente`
+
         const verdades = [
             "Que contigo no senti que tenia que demostrar nada.",
             "Que hubo momentos donde el mundo se sintio diferente.",
@@ -615,7 +864,7 @@ Te quiero mucho mucho mucho :)`
 
                 setTimeout(() => mostrar("bienvenida"), 2500)
 
-                setTimeout(() => mostrar("carta"), 4200)
+                setTimeout(() => mostrar("teExtrano"), 4200)
 
             }
 
@@ -634,10 +883,18 @@ Te quiero mucho mucho mucho :)`
 
             el.style.display = "flex"
 
-            setTimeout(() => el.classList.add("activa"), 30)
+            requestAnimationFrame(() => {
+
+                requestAnimationFrame(() => {
+
+                    el.classList.add("activa")
+
+                })
+
+            })
 
             document.querySelector(".menu-btn").style.display =
-                (id === "carta" || id === "verdades" || id === "cumple" || id === "musica")
+                (id === "carta" || id === "verdades" || id === "cumple" || id === "teExtrano" || id === "musica")
                     ? "flex" : "none"
 
             if (id === "carta") {
@@ -654,13 +911,19 @@ Te quiero mucho mucho mucho :)`
 
             }
 
+            if (id === "bienvenida") actualizarSaludo()
+
             if (id === "cumple") escribirCumple()
+
+            if (id === "teExtrano") escribirTeExtrano()
 
             if (id === "verdades") escribirVerdades()
 
             if (id === "musica" && primeraMusica) {
                 mostrarMusica()
                 primeraMusica = false
+
+
             }
 
         }
@@ -689,6 +952,25 @@ Te quiero mucho mucho mucho :)`
             c.innerHTML = ""
 
             cumpleTexto.split("\n\n").forEach((p, i) => {
+
+                const d = document.createElement("div")
+                d.className = "parrafo"
+                d.style.animationDelay = `${i * .4}s`
+                d.textContent = p
+
+                c.appendChild(d)
+
+            })
+
+        }
+
+
+        function escribirTeExtrano() {
+
+            const c = document.getElementById("textoTeExtrano")
+            c.innerHTML = ""
+
+            teExtranoTexto.split("\n\n").forEach((p, i) => {
 
                 const d = document.createElement("div")
                 d.className = "parrafo"
@@ -762,13 +1044,149 @@ Te quiero mucho mucho mucho :)`
 
         }
 
+        /*==========================
+PARTICULAS
+==========================*/
+
+        /*==========================
+        LUZ DINAMICA
+        ==========================*/
+
+        let mouseX = 50
+
+        let mouseY = 50
+
+        document.addEventListener("mousemove", e => {
+
+            mouseX = (e.clientX / window.innerWidth) * 100
+
+            mouseY = (e.clientY / window.innerHeight) * 100
+
+            document.body.style.setProperty("--mouseX", mouseX + "%")
+
+            document.body.style.setProperty("--mouseY", mouseY + "%")
+
+        })
+
+        const canvas = document.getElementById("particles")
+
+        const ctx = canvas.getContext("2d")
+
+        let particulas = []
+
+        function resizeCanvas() {
+
+            canvas.width = window.innerWidth
+
+            canvas.height = window.innerHeight
+
+        }
+
+        resizeCanvas()
+
+        window.addEventListener("resize", resizeCanvas)
+
+        for (let i = 0; i < 55; i++) {
+
+            particulas.push({
+
+                x: Math.random() * canvas.width,
+
+                y: Math.random() * canvas.height,
+
+                r: Math.random() * 2 + 0.5,
+
+                vx: (Math.random() - .5) * 0.18,
+
+                vy: (Math.random() - .5) * 0.18,
+
+                a: Math.random() * .45 + .1,
+
+                fase: Math.random() * Math.PI * 2,
+
+                vel: Math.random() * .02 + .005
+
+            })
+
+        }
+
+        function animarParticulas() {
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+            particulas.forEach(p => {
+
+                p.x += p.vx
+
+                p.y += p.vy
+
+                if (p.x < 0) p.x = canvas.width
+
+                if (p.x > canvas.width) p.x = 0
+
+                if (p.y < 0) p.y = canvas.height
+
+                if (p.y > canvas.height) p.y = 0
+
+                ctx.beginPath()
+
+                p.fase += p.vel
+
+                const alpha = p.a + (Math.sin(p.fase) * 0.12)
+
+                ctx.fillStyle = `rgba(255,255,255,${alpha})`
+
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+
+                ctx.fill()
+
+            })
+
+            requestAnimationFrame(animarParticulas)
+
+        }
+
+        animarParticulas()
+
+        /*==========================
+HOJA VIVA
+==========================*/
+
+        const hojas = document.querySelectorAll(".hoja")
+
+        document.addEventListener("mousemove", (e) => {
+
+            const x = (e.clientX / window.innerWidth - .5) * 2
+
+            const y = (e.clientY / window.innerHeight - .5) * 2
+
+            hojas.forEach(h => {
+
+                h.style.transform = `
+perspective(1400px)
+rotateX(${y * -1.2}deg)
+rotateY(${x * 1.8}deg)
+`
+
+            })
+
+        })
+
+        document.addEventListener("mouseleave", () => {
+
+            hojas.forEach(h => {
+
+                h.style.transform = `
+perspective(1400px)
+rotateX(0deg)
+rotateY(0deg)
+`
+
+            })
+
+        })
+
     </script>
 
 </body>
 </html>
-
-
-
-
-
-
